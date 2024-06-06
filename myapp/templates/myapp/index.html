@@ -1,0 +1,70 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% load goods_tags %}
+{% load carts_tags %}
+{% block content %}
+{% user_carts request as carts %}
+<section>
+    <div class="container">
+        <!-- Каталог и корзина с фиксированным расположением на странице -->
+        <div class="row mt-1 position-fixed z-3">
+            <!-- Каталог -->
+            <div class="dropdown mb-2">
+                <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Каталог
+                    <img class="mx-1" src="{% static 'icons/grid-fill.svg' %}" alt="Catalog Icon" width="16"
+                         height="16">
+                </button>
+                <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                    <li><a class="dropdown-item text-white" href="{% url 'goods:catalog' category.slug %}">{{ category.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% include 'bage_cart.html' %}
+        </div>
+    </div>
+    <!-- Контент -->
+    <div class="container">
+        <div class="row mt-1">
+            <div class="col-lg-2">
+                <!-- Пустой блок на Ваше усмотрение -->
+            </div>
+            <div class="col-lg-10">
+                <!-- Контент на странице -->
+                <div class="container mt-4">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            {% if messages %}
+                            {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                            <div id="notification" class="position-fixed start-50 translate-middle-x z-3 alert alert-success fade show custom-shadow"
+                                 role="alert">
+                                {{ message }}
+                            </div>
+                            {% endif %}
+                            {% if message.tags == 'warning' %}
+                            <div id="notification" class="position-fixed start-50 translate-middle-x z-3 alert alert-danger fade show custom-shadow"
+                                 role="alert">
+                                {{ message }}
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            <div id="jq-notification"
+                                 class="position-fixed start-50 translate-middle-x z-3 alert alert-success fade show custom-shadow"
+                                 style="display: none;" role="alert">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <h1 class="mt-5 pt-5"><strong>Магазин мебели HOME</strong></h1>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

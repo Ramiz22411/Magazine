@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/my_css.css' %}">
+    <!-- Стиль footer-a для главной страницы -->
+    <link rel="stylesheet" href="{% static 'css/my_footer_css.css' %}">
+    <!-- Favicons for different platforms -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <title>Home</title>
+</head>
+
+<body>
+{% include 'header.html' %}
+{% block content %}
+
+{% endblock %}
+{% if request.path == '/' or request.path == '/about/' %}
+{% include 'footer.html' %}
+{% endif %}
+
+<script src="{% static 'js/jquery/jquery-3.7.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-events.js' %}"></script>
+<script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

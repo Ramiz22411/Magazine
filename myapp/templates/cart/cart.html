@@ -1,0 +1,59 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% load goods_tags %}
+{% load carts_tags %}
+{% block content %}
+{% user_carts request as carts %}
+<section>
+    <div class="container">
+        <!-- Каталог и корзина с фиксированным расположением на странице -->
+        <div class="row mt-1 position-fixed z-3">
+            <!-- Каталог -->
+            <div class="dropdown mb-2">
+                <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Каталог
+                    <img class="mx-1" src="{% static 'icons/grid-fill.svg' %}" alt="Catalog Icon" width="16"
+                         height="16">
+                </button>
+                <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                    <li><a class="dropdown-item text-white" href="{% url 'goods:catalog' category.slug  %}">
+                        {{ category.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Контент -->
+    <div class="container">
+        <div class="row mt-1">
+            <div class="col-lg-2">
+                <!-- Пустой блок на усмотрение -->
+            </div>
+            <div class="col-lg-10">
+                <!-- Контент на странице -->
+                <div class="row">
+                    <div class="container mt-5">
+                        <div class="row justify-content-center">
+                            <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+                                <h3 class="text-center mb-4">Корзина</h3>
+                                <div class="container" id="cart-items-container">
+                                    {% include 'include_cart.html' %}
+                                </div>
+                                {% if  carts %}
+                                <a class="btn btn-dark" href="{% url 'orders:create_order' %}">
+                                    Оформить заказ
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

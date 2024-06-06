@@ -1,0 +1,43 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% load goods_tags %}
+{% load carts_tags %}
+{% block content %}
+{% user_carts request as carts %}
+<div class="container">
+    <!-- Каталог и корзина с фиксированным расположением на странице -->
+    <div class="row mt-1 position-fixed z-3">
+        <!-- Каталог -->
+        <div class="dropdown mb-2">
+            <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Каталог
+                <img class="mx-1" src="{% static 'icons/grid-fill.svg' %}" alt="Catalog Icon" width="16"
+                     height="16">
+            </button>
+            <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                {% tag_categories as categories %}
+                {% for category in categories %}
+                <li><a class="dropdown-item text-white" href="{% url 'goods:catalog' category.slug %}">{{ category.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% include 'bage_cart.html' %}
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-1">
+        <div class="col-lg-2">
+
+        </div>
+        <div class="col-lg-10">
+            <!-- Контент на странице -->
+            <div class="mt-5 pt-5 bg-white custom-shadow rounded">
+                <h2 class="m-2"><strong>О нас</strong></h2>
+                <p class="m-2" style="font-size: 1.2rem;">Текст о том какой классный этот интернет магазин.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
